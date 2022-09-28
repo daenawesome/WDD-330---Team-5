@@ -25,7 +25,7 @@ export function getParam(param) {
   const urlParams = new URLSearchParams(queryString);
   return urlParams.get(param);
 }
-
+// renders list based on template
 export function renderListWithTemplate(template, parentElement, list, callback) {
   list.forEach(item => {
     const clone = template.content.cloneNode(true);
