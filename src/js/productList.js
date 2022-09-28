@@ -32,4 +32,6 @@ export default class ProductList {
       renderListWithTemplate(template, this.listElement, list, this.prepareTemplate);
       
     }
+
+    // Restrict list to 4?
 }
