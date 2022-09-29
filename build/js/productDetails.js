@@ -21,7 +21,9 @@ export default class ProductDetails {
     // changed to be more dynamic
     // check cart current contents
     let cartContents = getLocalStorage('so-cart');
-    cartContents = [];
+    if (!cartContents) {
+      cartContents = [];
+    }
 
     // add to cart
     cartContents.push(this.product);
