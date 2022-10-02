@@ -1,5 +1,3 @@
-'use strict';
-
 function convertToText(res) {
   if (res.ok) {
     return res.text();
@@ -8,6 +6,7 @@ function convertToText(res) {
   }
 }
 
+// wrapper for querySelector...returns matching element
 export function qs(selector) {
   return document.querySelector(selector);
 }
@@ -16,12 +15,10 @@ export function qs(selector) {
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener('touchend', (event) => {
@@ -37,21 +34,23 @@ export function getParam(param) {
   return urlParams.get(param);
 }
 
-// render data to a template
-export function renderListWithTemplate(template, parentElement, list, callback) {
+export function renderListWithTemplate(template, parent, list, callback) {
   list.forEach(item => {
     const clone = template.content.cloneNode(true);
-    const doneTemplate = callback(clone, item);
-    parentElement.appendChild(doneTemplate);
+    const templateWithData = callback(clone, item);
+    parent.appendChild(templateWithData);
   })
 }
 
 export function renderWithTemplate(template, parent, data, callback) {
-  let clone = template.content.cloneNode(true);
-  if(callback) {
+  
+    let clone = template.content.cloneNode(true);
+    if(callback) {
     clone = callback(clone, data);
-  }
-  parent.appendChild(clone);
+    
+    }
+    parent.appendChild(clone);
+  
 }
 
 export async function loadTemplate(path) {
@@ -59,8 +58,10 @@ export async function loadTemplate(path) {
   const template = document.createElement('template');
   template.innerHTML = html;
   return template;
+
 }
 
+// load the header and footer
 export async function loadHeaderFooter() {
   const header = await loadTemplate('../partials/header.html');
   const footer = await loadTemplate('../partials/footer.html');

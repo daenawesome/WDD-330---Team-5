@@ -1,13 +1,15 @@
 import { setLocalStorage, getLocalStorage, loadHeaderFooter } from './utils.js';
 
+
 loadHeaderFooter();
 export default class ProductDetails {
   constructor(productId, dataSource){
     this.productId = productId;
     this.product = {};
     this.dataSource = dataSource;
+    
   }
-
+  
   async init() {
     this.product = await this.dataSource.findProductById(this.productId);
     document.querySelector('main').innerHTML = this.renderProductDetails();
@@ -17,10 +19,13 @@ export default class ProductDetails {
   }
 
   addToCart() {
+    // to fix the cart we need to get anything that is in the cart already.
     let cartContents = getLocalStorage('so-cart');
+    //check to see if there was anything there
     if(!cartContents){
       cartContents = [];
     }
+    // then add the current product to the list
     cartContents.push(this.product);
     setLocalStorage('so-cart', cartContents);
   }
@@ -30,7 +35,7 @@ export default class ProductDetails {
     <h2 class="divider">${this.product.NameWithoutBrand}</h2>
     <img
       class="divider"
-      src="${this.product.Image}"
+      src="${this.product.Images.PrimaryLarge}"
       alt="${this.product.NameWithoutBrand}"
     />
     <p class="product-card__price">$${this.product.FinalPrice}</p>
@@ -42,4 +47,5 @@ export default class ProductDetails {
       <button id="addToCart" data-id="${this.product.Id}">Add to Cart</button>
     </div></section>`;
   }
+
 }
