@@ -35,22 +35,19 @@ export function getParam(param) {
 }
 
 export function renderListWithTemplate(template, parent, list, callback) {
-  list.forEach(item => {
+  list.forEach((item) => {
     const clone = template.content.cloneNode(true);
     const templateWithData = callback(clone, item);
     parent.appendChild(templateWithData);
-  })
+  });
 }
 
 export function renderWithTemplate(template, parent, data, callback) {
-  
-    let clone = template.content.cloneNode(true);
-    if(callback) {
+  let clone = template.content.cloneNode(true);
+  if (callback) {
     clone = callback(clone, data);
-    
-    }
-    parent.appendChild(clone);
-  
+  }
+  parent.appendChild(clone);
 }
 
 export async function loadTemplate(path) {
@@ -58,7 +55,6 @@ export async function loadTemplate(path) {
   const template = document.createElement('template');
   template.innerHTML = html;
   return template;
-
 }
 
 // load the header and footer
